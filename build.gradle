@@ -18,6 +18,18 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    example {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    exampleImplementation.extendsFrom implementation
+    exampleRuntimeOnly.extendsFrom runtimeOnly
+}
+
 dependencies {
     implementation "ch.qos.logback:logback-classic:$verLogback"
     implementation "com.fasterxml.jackson.core:jackson-databind:$verJackson"
@@ -27,6 +39,14 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$verAssertj"
 }
 
+tasks.register("example", JavaExec)
+
 tasks.named("test") {
     useJUnitPlatform()
+}
+
+tasks.named("example") {
+    dependsOn "exampleClasses"
+    classpath sourceSets.example.runtimeClasspath
+    mainClass = "com.github.apatchydev.logbackextra.ExampleApp"
 }
