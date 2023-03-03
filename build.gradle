@@ -7,7 +7,11 @@ sourceCompatibility = "11"
 version "1.0.0"
 
 ext {
+    verLogback = "1.4.+"
+    verJackson = "2.14.+"
+
     verJUnit = "5.3.1"
+    verAssertj = "3.24.2"
 }
 
 repositories {
@@ -15,8 +19,12 @@ repositories {
 }
 
 dependencies {
+    implementation "ch.qos.logback:logback-classic:$verLogback"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$verJackson"
+
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$verJUnit"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$verJUnit"
+    testImplementation "org.assertj:assertj-core:$verAssertj"
 }
 
 tasks.named("test") {
