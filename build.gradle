@@ -1,5 +1,6 @@
 plugins {
     id "java"
+    id "maven-publish"
 }
 
 group = "com.github.apatchydev"
@@ -7,8 +8,8 @@ sourceCompatibility = "11"
 version "1.0.0"
 
 ext {
-    verLogback = "1.4.+"
-    verJackson = "2.14.+"
+    verLogback = "1.4.0"
+    verJackson = "2.14.0"
 
     verJUnit = "5.3.1"
     verAssertj = "3.24.2"
@@ -49,4 +50,16 @@ tasks.named("example") {
     dependsOn "exampleClasses"
     classpath sourceSets.example.runtimeClasspath
     mainClass = "com.github.apatchydev.logbackextra.ExampleApp"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = "com.github.apatchydev"
+            artifactId = "logback-extra"
+            version = project.version
+
+            from components.java
+        }
+    }
 }
